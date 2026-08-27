@@ -1,0 +1,142 @@
+# SYSTEM DESIGN
+
+## API
+
+- API: Application Programming Interface.
+- It is a way for two software components to communicate with each other.
+
+Example:
+Frontend → GET /users/123 → Backend
+
+## API Call
+
+- One piece of software sends a request to an API to ask it to perform something or return some data.
+
+## Single Server Setup
+
+- Web Browser / Mobile App
+  - Sends HTTP requests to the server.
+  - Receives HTML/JSON responses.
+- DNS:
+  - app.demo.com → 172.16.254.254
+- Server:
+  - JS (web app)
+  - Database
+  - Cache
+
+- Web browser: The server handles business logic, data storage, and presentation using HTML, CSS, and JS.
+
+## Mobile App
+
+- Mobile app requests data from the server using API calls.
+- Responses are typically in JSON format.
+
+## Scaling the System
+
+- Identify areas where a single server might fail as demand increases.
+- As users grow, we will separate the web tier and database.
+
+# DATABASE
+
+## Relational Database (RDBMS)
+
+- SQL
+- Supports complex join operations.
+- Provides data consistency and integrity.
+
+### Transactions → ACID
+
+- Atomicity: Completely succeeds or fails.
+- Consistency: A valid state → another valid state.
+- Isolation: Isolated from other transactions.
+- Durability: Data remains even after a transaction succeeds.
+
+## NoSQL Databases
+
+- Document stores
+- Wide-column stores
+- Key-value stores
+- Graph databases
+
+### MongoDB
+
+- Data is stored in JSON-like documents, which allow us to have complex data structures in a single record.
+
+### Wide-Column Stores
+
+- Data is stored in rows with dynamic columns.
+
+### Graph Databases
+
+- Stores data as nodes and relationships between those nodes.
+- It is useful when relationships between data are very critical and we need to perform relationship-based queries.
+
+### Key-Value Stores
+
+- Designed for very fast lookup when we know the key.
+- Commonly used for:
+  - Caching
+  - Sessions
+  - User preferences
+- Scale horizontally.
+- Stored in RAM.
+
+# LATENCY AND CONSISTENCY
+
+- Low latency: Response comes quickly.
+- Consistency: After an update, subsequent reads should return the appropriate updated value according to the system's consistency.
+
+## Strong Consistency
+
+- Latest data is immediately visible.
+
+## Eventual Consistency
+
+- Data may temporarily differ, but eventually all copies become consistent.
+
+# WHEN TO USE
+
+## 1. Relational
+
+- Data is well-structured with clear relationships.
+- Strong consistency and transactional integrity.
+
+## 2. Non-Relational
+
+- Super-low latency for rapid responses.
+- Data is unstructured or semi-structured.
+- Scalable storage for massive data volumes.
+
+# SCALING
+
+## 1. Vertical (Scale Up)
+
+- Increasing the resources of an existing server, such as adding more CPU, RAM, or storage.
+
+### Advantages
+
+1. Simple to implement.
+2. No need to manage multiple servers.
+
+### Disadvantages
+
+1. Hardware has a limit.
+2. Can become expensive.
+3. One server is still a single point of failure.
+
+## 2. Horizontal (Scale Out)
+
+- Adding more servers and distributing the workload among them.
+
+### Advantages
+
+1. Can handle much larger traffic.
+2. Easier to keep adding servers.
+3. Better fault tolerance.
+4. No single server needs to handle everything.
+
+### Disadvantages
+
+1. More complex.
+2. Need things like load balancing.
+3. Distributed system problems.
